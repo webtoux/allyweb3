@@ -474,22 +474,23 @@ function filterPosts(cat, btn) {
 
 function renderPosts(list) {
   var grid = document.getElementById('postsGrid');
+
   if(list.length === 0) {
     grid.innerHTML = '<div style="grid-column:span 3;text-align:center;padding:60px;color:var(--muted);">No posts in this category yet. Check back soon.</div>';
     return;
   }
+
   grid.innerHTML = list.map(function(p) {
-    return '<div class="post-card' + (p.featured ? ' featured' : '') + '" onclick="openPost(' + p.id + ')">' +
+    return '<a href="/posts/post' + p.id + '.html" class="post-card' + (p.featured ? ' featured' : '') + '">' +
       '<div class="post-top"><div class="post-top-dots"></div><span class="post-cat-badge">' + p.cat.toUpperCase() + '</span></div>' +
       '<div class="post-body">' +
         '<div class="post-title">' + p.title + '</div>' +
         '<div class="post-excerpt">' + p.excerpt + '</div>' +
         '<div class="post-footer"><span>' + p.date + ' · ' + p.readTime + '</span><span class="read-more">Read more →</span></div>' +
       '</div>' +
-    '</div>';
+    '</a>';
   }).join('');
 }
-
 function openPost(id) {
   var p = posts.find(function(x){ return x.id === id; });
   if(!p) return;
