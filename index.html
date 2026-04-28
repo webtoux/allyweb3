@@ -1131,32 +1131,6 @@ document.addEventListener('click', function(e) {
 });
 </script>
 
-<script>
-(function(){
-  var coins=[{id:'bitcoin',sym:'BTC'},{id:'ethereum',sym:'ETH'},{id:'solana',sym:'SOL'},{id:'binancecoin',sym:'BNB'},{id:'ripple',sym:'XRP'},{id:'dogecoin',sym:'DOGE'},{id:'cardano',sym:'ADA'},{id:'avalanche-2',sym:'AVAX'}];
-  function fp(n){n=parseFloat(n);if(n>=1000)return'$'+n.toLocaleString(undefined,{maximumFractionDigits:0});if(n>=1)return'$'+n.toFixed(2);return'$'+n.toFixed(4);}
-  function load(){
-    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,ripple,dogecoin,cardano,avalanche-2&vs_currencies=usd&include_24hr_change=true')
-      .then(function(r){return r.json();})
-      .then(function(data){
-        var bar=document.getElementById('priceTicker');
-        if(!bar)return;
-        bar.innerHTML=coins.map(function(c){
-          var d=data[c.id];if(!d)return'';
-          var ch=d.usd_24h_change||0;
-          var col=ch>=0?'#00e676':'#ff5252';
-          var ar=ch>=0?'+':'';
-          return '<span style="white-space:nowrap;display:inline-flex;align-items:center;gap:5px;">'
-            +'<b style="color:var(--subtle);">'+c.sym+'</b>'
-            +'<span style="color:var(--white);">'+fp(d.usd)+'</span>'
-            +'<span style="color:'+col+';">'+ar+ch.toFixed(2)+'%</span>'
-            +'</span>';
-        }).join('<span style="color:rgba(255,255,255,0.1);margin:0 2px;">|</span>');
-      })
-      .catch(function(){});
-  }
-  load();setInterval(load,30000);
-})();
-</script>
+
 </body>
 </html>
